@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+  --color-ink: #10243e;
+  --color-ink-soft: #46586f;
+  --color-paper: #f3f6f9;
+  --color-line: #dbe3ec;
+  --color-brand: #0f766e;
+  --color-brand-dark: #0b5953;
+  --color-brand-soft: #d9f2ee;
+  --color-accent: #f59e0b;
+  --color-danger: #b42318;
+  --color-danger-soft: #fde8e6;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-paper font-sans text-ink antialiased; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-primary { @apply bg-brand text-white hover:bg-brand-dark; }
+  .btn-ghost { @apply border border-line bg-white text-ink hover:bg-paper; }
+  .btn-danger { @apply bg-danger text-white hover:opacity-90; }
+  .field { @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none; }
+  .field-error { @apply mt-1 text-xs font-medium text-danger; }
+  .label { @apply mb-1.5 block text-sm font-semibold; }
+  .panel { @apply rounded-2xl border border-line bg-white; }
+}

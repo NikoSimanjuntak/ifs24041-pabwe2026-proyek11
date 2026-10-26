@@ -1,0 +1,30 @@
+# Menjalankan seluruh aplikasi:  docker compose up -d --build
+# Variabel dibaca dari environment / berkas .env di folder ini (lihat .env.example).
+services:
+  backend:
+    build: ./backend
+    container_name: interntrack-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET wajib diisi (minimal 32 karakter)}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    volumes:
+      - interntrack-data:/data
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        API_BASEURL: ${API_BASEURL:-http://localhost:3000/api}
+    container_name: interntrack-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+
+volumes:
+  interntrack-data:
